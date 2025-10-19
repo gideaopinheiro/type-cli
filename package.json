@@ -1,0 +1,21 @@
+{
+  "name": "timer-cli",
+  "bin": {
+    "timer": "./dist/index.js"
+  },
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsc -w",
+    "build": "tsc",
+    "link:global": "pnpm run build && pnpm link --global"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^24.6.2",
+    "typescript": "^5.9.3"
+  }
+}
