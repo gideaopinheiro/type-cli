@@ -1,9 +1,9 @@
-import { Storage } from '../storage'
+import { Storage } from "../storage";
 
-export async function startSession(sessionName?: string) {
-  if (!sessionName) {
-    sessionName = "untitled";
+export async function startSession(taskName?: string) {
+  if (!taskName) {
+    taskName = "untitled";
   }
-  await Storage.registerSessionStart(sessionName);
+  await Storage.registerSessionStart(taskName);
   return;
 }

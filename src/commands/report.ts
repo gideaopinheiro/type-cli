@@ -1,24 +1,25 @@
-import { Storage } from '../storage'
-import { Session } from '../types';
-import { formatTimeString } from '../utils/time-string';
+import { Storage } from "../storage";
+import { Task } from "../types";
+import { formatTimeString } from "../utils/time-string";
 
 export async function genReport() {
-  await Storage.ensureFile()
-  const sessions = await Storage.loadAllSessions();
-  for (const session of sessions) {
-    const totalMs = calculateTotalMs(session);
-    console.log(`Session ${session.name}: ${formatTimeString(totalMs)}`);
+  await Storage.ensureFile();
+  const tasks = await Storage.loadAllTasks();
+  for (const task of tasks) {
+    const totalMs = calculateTotalMs(task);
+    console.log(`[${task.name}] Session: ${formatTimeString(totalMs)}`);
   }
   return;
 }
 
-function calculateTotalMs(session: Session): number {
+function calculateTotalMs(task: Task): number {
   let totalTimeMs = 0;
-  for (let index = 0; index < session.records.length; index++) {
-    if (!session.records[index]?.finishing) {
+  for (let index = 0; index < task.sessions.length; index++) {
+    if (!task.sessions[index]?.finishing) {
       break;
     }
-    totalTimeMs += session.records[index]?.finishing! - session.records[index]?.starting!;
+    totalTimeMs +=
+      task.sessions[index]?.finishing! - task.sessions[index]?.starting!;
   }
   return totalTimeMs;
 }

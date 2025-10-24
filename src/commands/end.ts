@@ -1,16 +1,16 @@
 import inquirer from "inquirer";
-import { Storage } from '../storage'
+import { Storage } from "../storage";
 import { formatTimeString } from "../utils/time-string";
 
-export async function endSessions(sessionName?: string) {
-  if (sessionName !== undefined) {
-    console.log('finishing session ', sessionName);
-    console.log()
+export async function endSessions(taskName?: string) {
+  if (taskName !== undefined) {
+    console.log(`[${taskName}] Finishing session`);
+    console.log();
   }
 
-  const sessions = await Storage.loadAllSessions();
-  const openSessions = sessions.filter(
-    (s) => s.records[s.records.length - 1]?.finishing === undefined
+  const tasks = await Storage.loadAllTasks();
+  const openSessions = tasks.filter(
+    (s) => s.sessions[s.sessions.length - 1]?.finishing === undefined
   );
 
   if (openSessions.length === 0) {
@@ -20,18 +20,16 @@ export async function endSessions(sessionName?: string) {
 
   function renderChoices() {
     return openSessions.map((s) => {
-      const record = s.records[s.records.length - 1];
+      const record = s.sessions[s.sessions.length - 1];
       const elapsed = Date.now() - (record!.starting ?? 0);
       return {
         name: `${s.name.padEnd(20)} ${formatTimeString(elapsed)}`,
         value: s.name,
       };
     });
-
   }
 
   async function askWithTimer() {
-    console.log()
     const prompt = inquirer.prompt([
       {
         type: "checkbox",
@@ -54,9 +52,9 @@ export async function endSessions(sessionName?: string) {
     return;
   }
 
-  for (const s of sessions) {
+  for (const s of tasks) {
     if (selected.includes(s.name)) {
-      await Storage.registerSessionFinish(s.name)
+      await Storage.registerSessionFinish(s.name);
     }
   }
 

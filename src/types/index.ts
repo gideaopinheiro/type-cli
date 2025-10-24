@@ -1,6 +1,6 @@
 export type TimeRecords = { starting?: number; finishing?: number };
 
-export type Session = {
+export type Task = {
   name: string;
-  records: TimeRecords[];
+  sessions: TimeRecords[];
 };
