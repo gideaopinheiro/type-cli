@@ -7,3 +7,9 @@ export function formatTimeString(ms: number): string {
     .toString()
     .padStart(2, "0")}:${sec.toString().padStart(2, "0")}`;
 }
+
+export function formatDateString(timestamp: number): string {
+  const date = new Date(timestamp);
+  const formattedDate = date.toLocaleDateString("en-GB").replace(/\//g, "-");
+  return formattedDate;
+}

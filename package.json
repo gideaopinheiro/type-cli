@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "enquirer": "^2.4.1",
-    "inquirer": "^12.10.0"
+    "inquirer": "^12.10.0",
+    "table": "^6.9.0"
   }
 }

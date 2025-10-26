@@ -52,9 +52,9 @@ export async function endSessions(taskName?: string) {
     return;
   }
 
-  for (const s of tasks) {
-    if (selected.includes(s.name)) {
-      await Storage.registerSessionFinish(s.name);
+  for (const task of tasks) {
+    if (selected.includes(task.name)) {
+      await Storage.registerSessionFinish(task.name);
     }
   }
 
